@@ -27,7 +27,7 @@
         "bucket_name": "my_bucket",
         "bucket_region": "us-east-1",
         "storage_class": "STANDARD",
-        "upload_missing_files": true
+        "upload_missing_files": false
     },
     "schema": {
         "log_level": "list(trace|debug|info|notice|warning|error|fatal)",
