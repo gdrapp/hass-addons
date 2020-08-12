@@ -9,7 +9,8 @@ COPY rootfs /
 RUN apk add --no-cache \
     python3 \
     py3-boto3@edge \
-    py3-watchdog
+    py3-watchdog \
+    py3-requests
 
 # Build arguments
 ARG BUILD_ARCH

@@ -25,7 +25,8 @@ aws_secret_access_key: XXXXXXXXXXXXXXXX
 bucket_name: my-bucket
 bucket_region: us-east-1
 storage_class: STANDARD
-upload_missing_files: true
+upload_missing_files: false
+keep_local_snapshots: 2
 ```
 
 ### Option: `log_level`
@@ -48,6 +49,9 @@ Amazon S3 storage class to use when uploading files to S3.
 
 ### Option: `upload_missing_files`
 Upload files to S3 that exist in the Home Assistant backup directory but not in S3. The addon checks for a matching file name and file size. If the file size differs, the addon will assume the file on S3 is corrupt and upload the file again.
+
+### Option: `keep_local_snapshots`
+Number of local snapshots to keep. Snapshots are pruned after a successful snapshot upload to S3.
 
 ## Support
 
