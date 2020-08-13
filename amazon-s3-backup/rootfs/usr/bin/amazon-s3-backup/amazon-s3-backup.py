@@ -150,6 +150,7 @@ def upload_file(file: Path, s3_bucket: S3Bucket, supervisor_api: SupervisorAPI):
         logger.warning(
             f"Error getting snapshot info from Home Assistant Supervisor API : {err}")
 
+    logger.info(f"Uploading file {file} to S3 with metadata {metadata}")
     s3_bucket.upload_file(str(file), metadata)
 
 
