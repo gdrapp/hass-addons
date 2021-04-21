@@ -1,6 +1,6 @@
 {
     "name": "Amazon S3 Backup",
-    "version": "1.1",
+    "version": "1.2",
     "slug": "amazon-s3-backup",
     "description": "Automatically backup Home Assistant snapshots to Amazon S3",
     "url": "https://github.com/gdrapp/hass-addons",
@@ -25,8 +25,8 @@
         "aws_access_key": "XXXXXXXXXXXXXXXX",
         "aws_secret_access_key": "XXXXXXXXXXXXXXXX",
         "bucket_name": "my_bucket",
-        "bucket_region": "us-east-1",
-        "storage_class": "STANDARD",
+        "bucket_region": "eu-central-1",
+        "storage_class": "STANDARD_IA",
         "upload_missing_files": false,
         "keep_local_snapshots": 3
     },
