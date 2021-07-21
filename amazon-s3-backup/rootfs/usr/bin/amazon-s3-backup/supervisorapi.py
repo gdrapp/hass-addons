@@ -1,4 +1,6 @@
 import requests
+import requests.adapters
+import urllib3
 
 
 class SupervisorAPIError(Exception):
@@ -24,12 +26,17 @@ class SupervisorAPI:
             token (str): Supervisor bearer token
         """
         self.auth = _BearerAuth(token)
+        self.session = requests.Session()
+        retry_strategy = urllib3.Retry(
+            total=10, backoff_factor=10, status_forcelist=[400, 500, 502, 503, 504]
+        )
+        self.session.mount("http://", requests.adapters.HTTPAdapter(max_retries=retry_strategy))
 
     def _get(self, path: str) -> requests.Response:
         url = f"{SupervisorAPI.BASE_URL}{path}"
         try:
-            response = requests.get(url, auth=self.auth)
-        except requests.exceptions.ConnectionError as err:
+            response = self.session.get(url, auth=self.auth)
+        except (requests.exceptions.ConnectionError, requests.exceptions.RetryError) as err:
             raise SupervisorAPIError(
                 f"Error connecting to Home Assistant Supervisor API: {err}")
         except requests.exceptions.Timeout as err:
@@ -48,8 +55,8 @@ class SupervisorAPI:
     def _post(self, path: str) -> requests.Response:
         url = f"{SupervisorAPI.BASE_URL}{path}"
         try:
-            response = requests.post(url, auth=self.auth)
-        except requests.exceptions.ConnectionError as err:
+            response = self.session.post(url, auth=self.auth)
+        except (requests.exceptions.ConnectionError, requests.exceptions.RetryError) as err:
             raise SupervisorAPIError(
                 f"Error connecting to Home Assistant Supervisor API: {err}")
         except requests.exceptions.Timeout as err:
